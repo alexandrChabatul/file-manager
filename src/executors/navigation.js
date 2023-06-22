@@ -1,5 +1,4 @@
-import path, { isAbsolute } from "path";
-import { checkPath } from "../utils/utils.js";
+import { getRealPath } from "../utils/utils.js";
 import { readdir } from "fs/promises";
 
 const up = (directory) => {
@@ -12,12 +11,7 @@ const up = (directory) => {
 };
 
 const cd = async (directory, userPath) => {
-  if (isAbsolute(userPath)) {
-    await checkPath(userPath);
-    return { directory: userPath };
-  }
-  const newPath = path.join(directory, userPath);
-  await checkPath(newPath);
+  const newPath = await getRealPath(directory, userPath);
   return { directory: newPath };
 };
 
