@@ -1,0 +1,5 @@
+const hash = () => {
+
+};
+
+export { hash }; 
