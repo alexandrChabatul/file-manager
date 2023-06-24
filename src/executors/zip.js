@@ -1,6 +1,6 @@
 import { getRealPath } from "../utils/utils.js";
 import { pipeline } from 'stream/promises';
-import { createGzip, createGunzip } from 'zlib';
+import { createBrotliCompress, createBrotliDecompress } from 'zlib';
 import { createReadStream, createWriteStream } from 'fs';
 
 const compress = async (directory, filename, newFilename) => {
@@ -9,7 +9,7 @@ const compress = async (directory, filename, newFilename) => {
   const readable = createReadStream(oldPath);
   const writeable = createWriteStream(newPath);
   await pipeline(readable,
-        createGzip(),
+    createBrotliCompress(),
         writeable);
   return { message: `File ${filename} successfully compressed.`}
   
@@ -21,7 +21,7 @@ const decompress = async (directory, filename, newFilename) => {
   const readable = createReadStream(oldPath);
   const writeable = createWriteStream(newPath);
   await pipeline(readable,
-    createGunzip(),
+    createBrotliDecompress(),
     writeable);
   return { message: `File ${filename} successfully decompressed.`}
 }
