@@ -68,22 +68,14 @@ const commands = {
   },
   compress: {
     executor: compress,
-    params: 1,
+    params: 2,
     description: 'Compress file',
   },
   decompress: {
     executor: decompress,
-    params: 1,
+    params: 2,
     description: 'Decompress file',
   }
 };
 
-const osParams = {
-  EOL: 'default system End-Of-Line',
-  cpus: 'host machine CPUs info',
-  homedir: 'home directory',
-  username: 'current system username',
-  architecture: 'CPU architecture'
-}
-
-export { commands, osParams };
+export { commands };

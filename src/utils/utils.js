@@ -14,29 +14,28 @@ const checkAndParseLine = (line) => {
   return {
     executor: commands[elems[0]].executor,
     params: elems.slice(1),
+
   };
 };
 
 const checkCommandAndArgs = (elems) => {
   if (!commands[elems[0]])
     throw Error(
-      'No such command. Write command "help" to see all commands list.'
+      'Invalid command. Write command "help" to see all commands list.'
     );
   const params = commands[elems[0]].params;
   if (elems.length - 1 < params)
     throw Error(`${params} arguments expected for ${elems[0]} command`);
 };
 
-const getRealPath = async (directory, inputPath) => {
+const getRealPath = async (directory, inputPath, checkExist = true) => {
   if (isAbsolute(inputPath)) {
-    await stat(inputPath);
+    if (checkExist) await stat(inputPath);
     return userPath;
   }
   const newPath = path.join(directory, inputPath);
-  await stat(inputPath);
+  if (checkExist) await stat(newPath);
   return newPath;
 };
-
-const getCommandFunction = (command) => {};
 
 export { getUsername, checkAndParseLine, getRealPath };

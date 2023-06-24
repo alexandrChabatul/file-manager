@@ -11,13 +11,13 @@ const userHomeDir = os.homedir();
 const username = getUsername();
 let directory = userHomeDir;
 
-const exitPhrase = `Thank you for using File Manager, ${username}, goodbye!`;
+const exitPhrase = `Thank you for using File Manager, ${username}, goodbye!\n`;
 
 process.stdout.write(`Welcome to the File Manager, ${username}!\n`)
 process.stdout.write(`You are currently in ${directory}\n`)
 
 rl.on('line', async (input) => {
-  if (input.length === 0) return process.stdout.write(pathPhrase);
+  if (input.length === 0) return process.stdout.write(`You are currently in ${directory}\n`);
   if (input.toLowerCase() === '.exit') return closeStream();
 
   try {
@@ -26,7 +26,7 @@ rl.on('line', async (input) => {
     const result = await params.executor(directory, ...params.params);
     handleResult(result);
   } catch(e) {
-    console.error(e.message)
+    console.error(`Operation failed. ${e.message}`)
   }
   process.stdout.write(`You are currently in ${directory}\n`)
 });
